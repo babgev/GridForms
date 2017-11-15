@@ -1,0 +1,30 @@
+﻿<Window
+    x:Class="GridForms.WPF.MainWindow"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:GridForms.WPF="clr-namespace:GridForms.WPF"
+    xmlns:local="clr-namespace:GridForms.WPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Title="MainWindow"
+    Width="525"
+    Height="350"
+    mc:Ignorable="d">
+    <local:GridForm>
+        <local:Entry Label="ID">
+            <TextBox Text="Id" />
+        </local:Entry>
+        <local:Entry Label="Name">
+            <TextBox Text="NameText" />
+        </local:Entry>
+        <local:Entry Label="Radios">
+            <StackPanel>
+                <RadioButton>Radio 1</RadioButton>
+                <RadioButton>Radio 2</RadioButton>
+            </StackPanel>
+        </local:Entry>
+        <local:Entry Label="Button">
+            <Button Content="A beautiful button" />
+        </local:Entry>
+    </local:GridForm>
+</Window>
