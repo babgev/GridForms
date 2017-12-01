@@ -1,5 +1,4 @@
-﻿using GridForms.BindingsExample;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,21 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace GridForms.WPF
+namespace GridForms.BindingsExample
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
-    public partial class MainWindow : Window
+    public partial class BindingsExampleView : Window
     {
-        public MainWindow()
+        public BindingsExampleView()
         {
+            this.DataContext = new BindingsExampleViewModel();
             InitializeComponent();
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            new BindingsExampleView().Show();
         }
     }
 }

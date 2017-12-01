@@ -1,11 +1,11 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Markup;
 
 namespace GridForms.WPF
 {
-    [Serializable]
     [ContentProperty("Presenter")]
     public class Entry : UserControl
     {
@@ -27,15 +27,8 @@ namespace GridForms.WPF
         public static readonly DependencyProperty LabelProperty =
             DependencyProperty.Register(
                 "Label",
-                typeof(string),
+                typeof(Label),
                 typeof(Entry));
-
-        public static readonly DependencyProperty LabelVisibilityProperty =
-            DependencyProperty.Register(
-                nameof(LabelVisibility),
-                typeof(Visibility),
-                typeof(Entry));
-
         #endregion Dependency Properties
 
         public UIElement Presenter
@@ -44,18 +37,13 @@ namespace GridForms.WPF
             set => SetValue(PresenterProperty, value);
         }
 
-        public string Label
+        [TypeConverter(typeof(StringToLabelConverter))]
+        public Label Label
         {
-            get => (string)GetValue(LabelProperty);
+            get => (Label)GetValue(LabelProperty);
             set => SetValue(LabelProperty, value);
         }
-
-        public Visibility LabelVisibility
-        {
-            get => (Visibility?)GetValue(PresenterProperty) ?? Visibility.Visible;
-            set => SetValue(PresenterProperty, value);
-        }
-
+        
         public GridLength RowHeight
         {
             // ReSharper disable once PossibleNullReferenceException => has a default value of GridLength.Auto

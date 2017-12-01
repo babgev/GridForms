@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GridForms.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -9,18 +10,18 @@ using System.Windows.Data;
 using System.Windows.Markup;
 
 namespace GridForms.WPF
-{
-    [Serializable]
+{    
     [ContentProperty("Entries")]
     public class GridForm : UserControl
     {
         #region Dependency Properties
 
-        public static readonly DependencyProperty EntriesProperty =
-            DependencyProperty.Register(nameof(Entries),
-                typeof(List<Entry>),
-                typeof(GridForm));
-
+        public static readonly DependencyPropertyKey EntriesProperty =
+            DependencyProperty.RegisterReadOnly(nameof(Entries),
+                typeof(UIElementCollection),
+                typeof(GridForm),
+                new PropertyMetadata());
+        
         public static readonly DependencyProperty SeparatorHeightProperty =
             DependencyProperty.Register(
                 nameof(SeparatorHeight),
@@ -38,10 +39,10 @@ namespace GridForms.WPF
         #endregion Dependency Properties
 
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public List<Entry> Entries
+        public UIElementCollection Entries
         {
-            get => (List<Entry>)GetValue(EntriesProperty);
-            set => SetValue(EntriesProperty, value);
+            get => (UIElementCollection)GetValue(EntriesProperty.DependencyProperty);
+            private set => SetValue(EntriesProperty, value);
         }
 
         public GridLength SeparatorHeight
@@ -68,12 +69,12 @@ namespace GridForms.WPF
             grid.SizeChanged += ItemsContainer_OnSizeChanged;
             Content = scrollViewer;
 
-            SetValue(EntriesProperty, new List<Entry>());
+            Entries = new UIElementCollection(grid, grid);
         }
 
         private Grid CreateGrid()
         {
-            var grid = new Grid();
+            var grid = new Grid();            
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Tag="LabelColumn", Width = LabelColumnWidth });
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(10) });
             grid.ColumnDefinitions.Add(new ColumnDefinition() { Width = new GridLength(1, GridUnitType.Star) });
@@ -97,59 +98,57 @@ namespace GridForms.WPF
             for (var i = 0; i < Entries.Count; i++)
             {
                 var entry = Entries[i];
-                var label = ResolveLabel(entry);
+                var castedEntry = entry as Entry;              
+                
+                var label = castedEntry.Label;
+                if(label != null)
+                {
+                    grid.Children.Add(label);
+                    Grid.SetColumn(label, 0);
+                }
 
-                grid.Children.Add(label);
-                Grid.SetColumn(label, 0);
-
-                var presenter = entry.Presenter;
+                var presenter = castedEntry.Presenter;
                 grid.Children.Add(presenter);
                 Grid.SetColumn(presenter, 2);
 
-                grid.RowDefinitions.Add(new RowDefinition { Height = entry.RowHeight });
+                grid.RowDefinitions.Add(new RowDefinition { Height = castedEntry.RowHeight });
 
+                int uiRow;
                 if (HasSeparator)
                 {
                     // ReSharper disable once PossibleInvalidOperationException => HasSeparator checks for null
                     grid.RowDefinitions.Add(new RowDefinition { Height = SeparatorHeight });
-                    SetRows(label, presenter, i * 2);
+                    uiRow=  i * 2;
                 }
                 else
                 {
-                    SetRows(label, presenter, i);
+                    uiRow = i;
                 }
 
-                grid.Children.Remove(entry);
+                SetRows(label, presenter, uiRow);
+                ApplyVisibility();
+
+                void ApplyVisibility()
+                {
+                    var targetRow = grid.RowDefinitions[uiRow];
+                    var converter = new VisibilityToGridLengthConverter();
+                    if (BindingOperations.GetBinding(entry, Entry.VisibilityProperty) != null)
+                    {
+                        var binding = new Binding() { Source = castedEntry, Path = new PropertyPath(nameof(Visibility)), Converter = converter };
+                        BindingOperations.SetBinding(targetRow, RowDefinition.HeightProperty, binding);
+                    }
+                    else
+                    {
+                        targetRow.Height = (GridLength)converter.Convert(castedEntry.Visibility, typeof(GridLength),null, null);
+                    }                 
+                }
             }
         }
-
-        private static Label ResolveLabel(Entry entry)
+        
+        private static void SetRows(Label label, UIElement presenter, int uiRow)
         {
-            var label = new Label { VerticalAlignment = VerticalAlignment.Center };
-
-            var labelContentBinding = BindingOperations.GetBinding(entry, Entry.LabelProperty);
-            if (labelContentBinding != null)
-            {
-                BindingOperations.SetBinding(label, ContentProperty, labelContentBinding);
-            }
-            else
-            {
-                label.Content = entry.Label;
-            }
-
-            var labelVisibilityBinding = BindingOperations.GetBinding(entry, Entry.LabelVisibilityProperty);
-            if (labelVisibilityBinding != null)
-            {
-                BindingOperations.SetBinding(label, VisibilityProperty, labelVisibilityBinding);
-            }
-
-            return label;
-        }
-
-        private static void SetRows(Label label, UIElement presenter, int i)
-        {
-            Grid.SetRow(label, i);
-            Grid.SetRow(presenter, i);
+            if (label != null) Grid.SetRow(label, uiRow);
+            Grid.SetRow(presenter, uiRow);           
         }
     }
 }
