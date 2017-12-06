@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace GridForms.Helpers
+namespace GridForms.WPF.Examples.Helpers
 {
     public static class AsyncHelper
     {

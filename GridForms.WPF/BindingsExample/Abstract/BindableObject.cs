@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace GridForms.BindingsExample.Abstract
+namespace GridForms.WPF.Examples.BindingsExample.Abstract
 {
     public abstract class BindableObject : INotifyPropertyChanged
     {

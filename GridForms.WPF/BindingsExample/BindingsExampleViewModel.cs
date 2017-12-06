@@ -1,13 +1,8 @@
-﻿using GridForms.BindingsExample.Abstract;
-using GridForms.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using GridForms.WPF.Examples.BindingsExample.Abstract;
+using GridForms.WPF.Examples.Helpers;
 using System.Threading;
-using System.Threading.Tasks;
 
-namespace GridForms.BindingsExample
+namespace GridForms.WPF.Examples.BindingsExample
 {
     class BindingsExampleViewModel : BindableObject
     {

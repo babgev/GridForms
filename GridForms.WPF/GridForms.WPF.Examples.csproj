@@ -71,12 +71,8 @@
       <DependentUpon>BindingsExampleView.xaml</DependentUpon>
     </Compile>
     <Compile Include="BindingsExample\BindingsExampleViewModel.cs" />
-    <Compile Include="Entry.cs" />
-    <Compile Include="GridForm.cs" />
     <Compile Include="Helpers\AsyncHelper.cs" />
     <Compile Include="Helpers\BoolToVisibilityConverter.cs" />
-    <Compile Include="Helpers\VisibilityToGridLengthConverter.cs" />
-    <Compile Include="StringToLabelConverter.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -108,6 +104,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GridForms.WPF.Core\GridForms.WPF.Core.csproj">
+      <Project>{75ed2b9e-fa7d-469b-982a-2fd168122f95}</Project>
+      <Name>GridForms.WPF.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

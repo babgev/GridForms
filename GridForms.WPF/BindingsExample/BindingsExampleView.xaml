@@ -1,18 +1,18 @@
 ﻿<Window
-    x:Class="GridForms.BindingsExample.BindingsExampleView"
+    x:Class="GridForms.WPF.Examples.BindingsExample.BindingsExampleView"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:gridForm="clr-namespace:GridForms.WPF"
+    xmlns:gridForms="clr-namespace:GridForms.WPF.Core;assembly=GridForms.WPF.Core"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     d:DesignHeight="300"
     d:DesignWidth="300"
     mc:Ignorable="d">
     <Grid>
-        <gridForm:GridForm>
-            <gridForm:Entry Label="An entry" Visibility="{Binding UiIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <gridForms:GridForm>
+            <gridForms:Entry Label="An entry" Visibility="{Binding UiIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <TextBox Text="SimpleTextInput" />
-            </gridForm:Entry>
-        </gridForm:GridForm>
+            </gridForms:Entry>
+        </gridForms:GridForm>
     </Grid>
 </Window>

@@ -3,20 +3,19 @@ using System.Globalization;
 using System.Windows;
 using System.Windows.Data;
 
-namespace GridForms.WPF.Examples.Helpers
+namespace GridForms.WPF.Core
 {
-    public class BoolToVisibilityConverter : IValueConverter
+    class VisibilityToGridLengthConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is bool boolValue && boolValue) return Visibility.Visible;
-            else return Visibility.Collapsed;
+            if (value is Visibility visibilityValue && visibilityValue == Visibility.Visible) return GridLength.Auto;
+            else return new GridLength(0);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value is Visibility visValue && visValue == Visibility.Visible) return true;
-            else return false;
+            throw new NotImplementedException();
         }
     }
 }
