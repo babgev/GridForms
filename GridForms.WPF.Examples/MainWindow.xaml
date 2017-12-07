@@ -2,23 +2,25 @@
     x:Class="GridForms.WPF.Examples.MainWindow"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:GridForms.WPF="clr-namespace:GridForms.WPF"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:gridForms="clr-namespace:GridForms.WPF.Core;assembly=GridForms.WPF.Core"
-    xmlns:local="clr-namespace:GridForms.WPF"
+    xmlns:lex="http://wpflocalizeextension.codeplex.com"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     Title="MainWindow"
     Width="525"
     Height="350"
+    lex:LocalizeDictionary.DesignCulture="en"
+    lex:ResxLocalizationProvider.DefaultAssembly="GridForms.WPF.Examples"
+    lex:ResxLocalizationProvider.DefaultDictionary="LocalizationResource"
     mc:Ignorable="d">
     <gridForms:GridForm>
-        <gridForms:Entry Label="ID">
+        <gridForms:Entry LabelContent="ID">
             <TextBox Text="Id" />
         </gridForms:Entry>
-        <gridForms:Entry Label="Name" Visibility="Collapsed">
+        <gridForms:Entry LabelContent="Name" Visibility="Collapsed">
             <TextBox Text="NameText" />
         </gridForms:Entry>
-        <gridForms:Entry Label="Radios">
+        <gridForms:Entry LabelContent="{lex:Loc Key=LocalizedLabel}">
             <StackPanel>
                 <RadioButton>Radio 1</RadioButton>
                 <RadioButton>Radio 2</RadioButton>

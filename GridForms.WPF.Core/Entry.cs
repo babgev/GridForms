@@ -12,22 +12,29 @@ namespace GridForms.WPF.Core
 
         public static readonly DependencyProperty PresenterProperty =
             DependencyProperty.Register(
-                "Presenter",
+                nameof(Presenter),
                 typeof(UIElement),
                 typeof(Entry));
 
         public static readonly DependencyProperty RowHeightProperty =
             DependencyProperty.Register(
-                "RowHeight",
+                nameof(RowHeight),
                 typeof(GridLength),
                 typeof(Entry),
                 new PropertyMetadata(GridLength.Auto));
 
         public static readonly DependencyProperty LabelProperty =
             DependencyProperty.Register(
-                "Label",
+                nameof(Label),
                 typeof(Label),
                 typeof(Entry));
+
+        public static readonly DependencyProperty LabelContentProperty =
+            DependencyProperty.Register(
+                nameof(LabelContent),
+                typeof(object),
+                typeof(Entry));
+
         #endregion Dependency Properties
 
         public UIElement Presenter
@@ -35,19 +42,24 @@ namespace GridForms.WPF.Core
             get => (UIElement)GetValue(PresenterProperty);
             set => SetValue(PresenterProperty, value);
         }
-
-        [TypeConverter(typeof(StringToLabelConverter))]
+        
         public Label Label
         {
             get => (Label)GetValue(LabelProperty);
             set => SetValue(LabelProperty, value);
         }
-        
+
         public GridLength RowHeight
         {
             // ReSharper disable once PossibleNullReferenceException => has a default value of GridLength.Auto
             get => (GridLength)GetValue(RowHeightProperty);
             set => SetValue(RowHeightProperty, value);
+        }
+
+        public object LabelContent
+        {
+            get => GetValue(LabelContentProperty);
+            set => SetValue(LabelContentProperty, value);
         }
     }
 }

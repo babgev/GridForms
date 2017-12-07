@@ -10,7 +10,7 @@
     mc:Ignorable="d">
     <Grid>
         <gridForms:GridForm>
-            <gridForms:Entry Label="An entry" Visibility="{Binding UiIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+            <gridForms:Entry LabelContent="An entry" Visibility="{Binding UiIsVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
                 <TextBox Text="SimpleTextInput" />
             </gridForms:Entry>
         </gridForms:GridForm>

@@ -97,6 +97,23 @@ namespace GridForms.WPF.Core
                 var castedEntry = entry as Entry;              
                 
                 var label = castedEntry.Label;
+                if (label == null)
+                {
+                    var labelContentBinding = BindingOperations.GetBinding(castedEntry, Entry.LabelContentProperty);
+                    if(labelContentBinding != null)
+                    {
+                        label = new Label();
+                        BindingOperations.SetBinding(label, Label.ContentProperty, labelContentBinding);
+                    }                   
+                    else if(castedEntry.LabelContent != null)
+                    {
+                        label = new Label
+                        {
+                            Content = castedEntry.LabelContent
+                        };
+                    }
+                }
+
                 if(label != null)
                 {
                     grid.Children.Add(label);
