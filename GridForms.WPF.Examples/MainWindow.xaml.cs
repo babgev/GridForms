@@ -17,5 +17,10 @@ namespace GridForms.WPF.Examples
         {
             new BindingsExampleView().Show();
         }
+
+        private void LongForm_Click(object sender, RoutedEventArgs e)
+        {
+            new LongFormExample().Show();
+        }
     }
 }

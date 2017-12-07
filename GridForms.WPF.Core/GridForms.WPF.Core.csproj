@@ -47,7 +47,6 @@
     <Compile Include="Entry.cs" />
     <Compile Include="GridForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StringToLabelConverter.cs" />
     <Compile Include="VisibilityToGridLengthConverter.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

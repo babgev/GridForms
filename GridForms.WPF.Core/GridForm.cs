@@ -144,15 +144,23 @@ namespace GridForms.WPF.Core
                 void ApplyVisibility()
                 {
                     var targetRow = grid.RowDefinitions[uiRow];
-                    var converter = new VisibilityToGridLengthConverter();
-                    if (BindingOperations.GetBinding(entry, Entry.VisibilityProperty) != null)
+                    var separatorRow = grid.RowDefinitions[uiRow + 1];
+
+                    var uiRowConverter = new VisibilityToGridLengthConverter(castedEntry.RowHeight);
+                    var separatorRowConverter = new VisibilityToGridLengthConverter(SeparatorHeight);
+
+                    if (BindingOperations.GetBinding(entry, VisibilityProperty) != null)
                     {
-                        var binding = new Binding() { Source = castedEntry, Path = new PropertyPath(nameof(Visibility)), Converter = converter };
-                        BindingOperations.SetBinding(targetRow, RowDefinition.HeightProperty, binding);
+                        var uiRowBinding = new Binding() { Source = castedEntry, Path = new PropertyPath(nameof(Visibility)), Converter = uiRowConverter };
+                        BindingOperations.SetBinding(targetRow, RowDefinition.HeightProperty, uiRowBinding);
+
+                        var separatorRowBinding =  new Binding() { Source = castedEntry, Path = new PropertyPath(nameof(Visibility)), Converter = separatorRowConverter };
+                        BindingOperations.SetBinding(separatorRow, RowDefinition.HeightProperty, separatorRowBinding);
                     }
                     else
                     {
-                        targetRow.Height = (GridLength)converter.Convert(castedEntry.Visibility, typeof(GridLength),null, null);
+                        targetRow.Height = (GridLength)uiRowConverter.Convert(castedEntry.Visibility, typeof(GridLength),null, null);
+                        separatorRow.Height = (GridLength)separatorRowConverter.Convert(castedEntry.Visibility, typeof(GridLength), null, null);
                     }                 
                 }
             }

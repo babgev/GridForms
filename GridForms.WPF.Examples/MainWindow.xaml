@@ -35,5 +35,8 @@
             </gridForms:Entry.Label>
             <Button Click="Button_Click" Content="Go to BindingExample" />
         </gridForms:Entry>
+        <gridForms:Entry LabelContent="Long form example">
+            <Button Click="LongForm_Click" Content="Go to Long form example" />
+        </gridForms:Entry>
     </gridForms:GridForm>
 </Window>
